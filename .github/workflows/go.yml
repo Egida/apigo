@@ -28,7 +28,7 @@ jobs:
        username: ${{ secrets.USER }}
        password: ${{ secrets.PWD }}
        port: 22
-       source: "/"         
+       source: "."         
        target: "/opt/apps/apigo"
    
     - name: Deploy and rebuild on server
