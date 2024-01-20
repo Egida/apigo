@@ -1,0 +1,26 @@
+<section class="bg-white">
+  <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+    <div class="mx-auto max-w-screen-sm text-center">
+      <h1
+        class="mb-4 text-5xl tracking-tight font-extrabold text-sky-600"
+      >
+        Token for user {{.User.Username}}
+      </h1>
+      <p
+        class="mb-4 text-md tracking-tight font-bold text-gray-900"
+      >
+        {{.Token}}
+      </p>
+      <p
+        class="mb-4 text-xl tracking-tight font-bold text-gray-900"
+      >
+        Remember to copy this api key. It will not be possible after.
+      </p>
+      <a
+        href="/admin/accounts"
+        class="inline-flex text-white bg-sky-600 hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center my-4"
+        >Back to Accounts</a
+      >
+    </div>
+  </div>
+</section>

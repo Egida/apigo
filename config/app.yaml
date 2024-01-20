@@ -1,0 +1,32 @@
+app:
+#DDOS Credentials
+  ddosusername:  "7da6ec6d-6fe4-4d53-af17-23f9363ff2e5"
+  ddospassword: "b154de01-b95d-49c9-850e-9ed6b4886b74"
+  layer7template: "aecfff13-109c-436a-a02e-f6d4315d6c72"
+#DB Connectionstring
+  dbconnectionstring: "apigo:Maikomania18@tcp(5.252.101.88:3306)/apigo?charset=utf8mb4&parseTime=True&loc=Local"
+  dbdb1: "db1:Maikomania18@tcp(5.252.101.88:3306)/db1?charset=utf8mb4&parseTime=True&loc=Local"
+#JWT Private Key
+  privatkey: "hwurenjwnfwer39rupp@lk0qei0"
+#dynadot
+  dynapikey: "7y7Dc6z7H6O7BjL9J6O747d9T6T7WN8i6m8O7U7pC7u"
+
+
+#admin dashboard user
+  adminusername: "admin"
+  adminpassword: "admin"
+  
+#Cloudns
+  cloudnsauthid: "7927"
+  cloudnsauthpass: "Maikomania18"
+  cloudnsserver: "https://api.cloudns.net"
+  cloudnsns1: "ns1.dnic.icu"
+  cloudnsns2: "ns2.dnic.icu"
+#dsh
+  dshurl: https://api.dsh.gg/api/v2/
+  dshkey: DSH-43336984-nHjF79WR2UoXCQM680SC1qVQ5JADEv3Y4K
+
+#PathActiveservers
+  #PathActiveservers
+  activepathusername: "125271"
+  activepathpassword: "7WxcSgVDdjLu37"

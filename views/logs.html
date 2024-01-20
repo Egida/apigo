@@ -1,0 +1,19 @@
+<section class="bg-gray-50 p-3 sm:p-5">
+
+<div class="space-y-4 lg:col-start-1 lg:col-span-3">
+    <div id="console"
+        class="w-full mx-auto overflow-y-auto h-auto p-6 text-green-300 font-mono text-sm rounded-xl bg-sky-950 max-h-[50rem] min-h-[50rem]"
+        data-default-can-auto-scroll="true"
+        x-data="logs()">
+        <template x-for="log in logstream">
+            <p class="pb-2 break-all overflow-x-hidden">
+                <span style="color: gray" x-text="log.timestamp"></span>
+                [<span style="color: cyan" x-text="log.level"></span>]
+                <span style="color: white" x-text="log.caller"></span>
+                <span x-text="log.message"></span>
+            </p>
+        </template>
+    </div>
+</div>
+
+</section>

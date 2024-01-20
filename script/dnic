@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+
+case $1 in
+    "restart")
+        echo "stating dnicapi"
+        go build api
+        echo "Build Go Api"
+        sleep 15
+        systemctl start dnicapi
+    ;;
+    "start")
+        echo "stating dnicapi"
+        go build main.go
+        systemctl restart dnicapi
+    ;;
+    "stop")
+        echo "stopping dnicapi"
+        systemctl stop dnicapi
+    ;;
+    "status")
+        echo "status of dnicapi"
+        systemctl status dnicapi
+    ;;
+    *)
+        echo "Usage: script/dnic [start|stop|status]"
+    ;;
+esac

@@ -1,0 +1,285 @@
+<div x-data="{ open: false, formData: emptyUserForm() }">
+  <section class="bg-gray-50 p-3 sm:p-5">
+    <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
+      <!-- Start coding here -->
+      <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
+        <div
+          class="flex flex-col md:flex-row-reverse items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4"
+        >
+          <div
+            class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0"
+          >
+            <button
+              type="button"
+              class="flex items-center justify-center text-white bg-sky-600 hover:bg-sky-700 focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2 focus:outline-none"
+              @click="open = true; formData = emptyUserForm()"
+            >
+              <svg
+                class="h-3.5 w-3.5 mr-2"
+                fill="currentColor"
+                viewbox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path
+                  clip-rule="evenodd"
+                  fill-rule="evenodd"
+                  d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                />
+              </svg>
+              Add user
+            </button>
+          </div>
+          <div class="text-gray-700 uppercase font-bold">Users</div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm text-left text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+              <tr>
+                <th scope="col" class="px-4 py-3">Username</th>
+                <th scope="col" class="px-4 py-3">Role</th>
+                <th scope="col" class="px-4 py-3">IPs</th>
+                <th scope="col" class="px-4 py-3">Created at</th>
+                <th scope="col" class="px-4 py-3">
+                  <span class="sr-only">Actions</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {{range .Users}}
+              <tr class="border-b">
+                <th
+                  scope="row"
+                  class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap"
+                >
+                  {{.Username}}
+                </th>
+                <td class="px-4 py-3">{{.Role}}</td>
+                <td class="px-4 py-3">{{.IPs.Format}}</td>
+                <td class="px-4 py-3">{{.CreatedAt.Format "2006-01-02"}}</td>
+                <td class="px-4 py-3 flex items-center justify-end">
+                  <ul class="flex py-1 text-sm text-gray-700">
+                    <li>
+                      <a
+                        href="/admin/accounts/{{.ID}}/revoke"
+                        class="block rounded-lg py-2 px-4 hover:bg-red-100 hover:text-red-700"
+                        onclick="return confirm('Are you sure?')"
+                      >
+                        revoke
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="/admin/accounts/{{.ID}}/token/new"
+                        class="block rounded-lg py-2 px-4 hover:bg-blue-100 hover:text-blue-700"
+                      >
+                        generate api key
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="/admin/accounts/{{.ID}}/delete"
+                        class="block rounded-lg py-2 px-4 hover:bg-red-100 hover:text-red-700"
+                        onclick="return confirm('Are you sure?')"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="w-6 h-6"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                          />
+                        </svg>
+                      </a>
+                    </li>
+                    <li>
+                      <button
+                        class="block rounded-lg py-2 px-4 hover:bg-gray-100"
+                        @click="open = true; formData={ username: '{{.Username}}', role: '{{.Role}}', email: '{{.Email}}', ips: '{{.IPs.Format}}', title: 'Edit User', action: '/admin/accounts/{{.ID}}/edit', state: 'edit' }"
+                        @prevent=""
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="w-6 h-6"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                          />
+                        </svg>
+                      </button>
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+              {{end}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div
+    id="defaultModal"
+    tabindex="-1"
+    aria-hidden="true"
+    class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+    x-show="open"
+  >
+    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto mx-auto top-20">
+      <!-- Modal content -->
+      <div
+        class="relative p-4 bg-white rounded-lg shadow sm:p-5"
+        @click.outside="open = false"
+      >
+        <!-- Modal header -->
+        <div
+          class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5"
+        >
+          <h3
+            class="text-lg font-semibold text-gray-900"
+            x-text="formData.title"
+          ></h3>
+          <button
+            type="button"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+            data-modal-toggle="defaultModal"
+            @click="open = false"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <form :action="formData.action" , method="post">
+          <div class="grid gap-4 mb-4 sm:grid-cols-2">
+            <div>
+              <label
+                for="username"
+                class="block mb-2 text-sm font-medium text-gray-900"
+                >Username</label
+              >
+              <input
+                type="text"
+                name="username"
+                id="username"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block w-full p-2.5"
+                placeholder="Type username"
+                required
+                x-model="formData.username"
+              />
+            </div>
+            <div>
+              <label
+                for="password"
+                class="block mb-2 text-sm font-medium text-gray-900"
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block w-full p-2.5"
+                placeholder="Type password"
+                :required="formData.state === 'new'"
+                x-model="formData.password"
+              />
+            </div>
+            <div>
+              <label
+                for="email"
+                class="block mb-2 text-sm font-medium text-gray-900"
+                >Email</label
+              >
+              <input
+                type="text"
+                name="email"
+                id="email"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block w-full p-2.5"
+                placeholder="Type email"
+                required
+                x-model="formData.email"
+              />
+            </div>
+            <div>
+              <label
+                for="role"
+                class="block mb-2 text-sm font-medium text-gray-900"
+                >Role</label
+              >
+              <select
+                id="role"
+                name="role"
+                x-model="formData.role"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+              >
+                <option>Select role</option>
+                {{range .Roles}}
+                <option value="{{.}}">{{.}}</option>
+                {{end}}
+              </select>
+            </div>
+            <div>
+              <label
+                for="ips"
+                class="block mb-2 text-sm font-medium text-gray-900"
+                >IPs</label
+              >
+              <input
+                type="text"
+                name="ips"
+                id="ips"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block w-full p-2.5"
+                placeholder="Type ips"
+                x-model="formData.ips"
+              />
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="text-white inline-flex items-center bg-sky-600 hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            x-text="formData.state === 'new' ? 'Add new user' : 'Update user'"
+          >
+            <svg
+              class="mr-1 -ml-1 w-6 h-6"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
