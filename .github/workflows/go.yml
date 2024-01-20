@@ -1,39 +1,43 @@
-name: scp files
-on: [push]
-# Steps represent a sequence of tasks that will be executed as part of the job
+name: Go
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
 jobs:
-build:
-    name: Build
+
+  build:
     runs-on: ubuntu-latest
-  steps:  
-- name: Checkout the repository
-  uses: actions/checkout@v4
+    steps:
+    - uses: actions/checkout@v3
 
-- name: Set up Go 1.13
-  uses: actions/setup-go@v1
-  with: 
-    go-version: 1.13         
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+       go-version: '1.21'
 
-- name: Build app 
-  run: go build -o app main.go
+    - name: Build app 
+      run: go build -o main main.go
 
-- name: SCP to Ocean
-  uses: appleboy/scp-action@master
-  with:
-    host: ${{ GO_HOST }}
-    username: ${{ GO_USER }}
-    password: ${{ GO_PWD }}
-    port: 2222
-    source: "app"         
-    target: "dist"    
-
-- name: Deploy and rebuild on server
-  uses: appleboy/ssh-action@master
-  with:
-    host: ${{ GO_HOST }}
-    username: ${{ GO_USER }}
-    password: ${{ GO_PWD }}
-    port: 2222
-    script:           
-      systemctl restart goweb.service &&
-      systemctl status goweb
+    - name: SCP to Server
+      uses: appleboy/scp-action@master
+      with:
+       host: ${{ GO_HOST }}
+       username: ${{ GO_USER }}
+       password: ${{ GO_PWD }}
+       port: 2222
+       source: "main"         
+       target: "/opt/apigo"
+   
+    - name: Deploy and rebuild on server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ GO_HOST }}
+        username: ${{ GO_USER }}
+        password: ${{ GO_PWD }}
+        port: 2222
+        script:           
+         systemctl restart dnicapi &&
+         systemctl status dnicapi
