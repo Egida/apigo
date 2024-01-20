@@ -24,9 +24,9 @@ jobs:
     - name: SCP to Server
       uses: appleboy/scp-action@master
       with:
-       host: ${{ GO_HOST }}
-       username: ${{ GO_USER }}
-       password: ${{ GO_PWD }}
+       host: ${{ host }}
+       username: ${{ user }}
+       password: ${{ pwd }}
        port: 2222
        source: "main"         
        target: "/opt/apigo"
@@ -34,9 +34,9 @@ jobs:
     - name: Deploy and rebuild on server
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ GO_HOST }}
-        username: ${{ GO_USER }}
-        password: ${{ GO_PWD }}
+        host: ${{ host }}
+        username: ${{ user }}
+        password: ${{ pwd }}
         port: 2222
         script:           
          systemctl restart dnicapi &&
