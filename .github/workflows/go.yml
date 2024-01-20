@@ -27,7 +27,7 @@ jobs:
        host: ${{ host }}
        username: ${{ user }}
        password: ${{ pwd }}
-       port: 2222
+       port: 22
        source: "main"         
        target: "/opt/apigo"
    
@@ -37,7 +37,7 @@ jobs:
         host: ${{ host }}
         username: ${{ user }}
         password: ${{ pwd }}
-        port: 2222
+        port: 22
         script:           
          systemctl restart dnicapi &&
          systemctl status dnicapi
