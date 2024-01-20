@@ -239,5 +239,5 @@ func serveApplication() {
 	//ping.Use(middleware.JWTAuthMiddleware)
 	//ping.Get("/host/:host/:port", controller.Ping)
 	//app.Listen(":8000")
-	app.ListenTLS(":443", "./fullchain.pem", "./privkey.pem")
+	app.ListenTLS(":443", "./fullchain.crt", "./fullchain.key")
 }
