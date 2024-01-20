@@ -25,7 +25,7 @@ import (
 
 	"github.com/gofiber/fiber/v2/middleware/earlydata"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
-	"github.com/gofiber/fiber/v2/middleware/monitor"
+	//"github.com/gofiber/fiber/v2/middleware/monitor"
 	"github.com/gofiber/fiber/v2/middleware/requestid"
 	"github.com/gofiber/template/html"
 	"github.com/rs/zerolog"
