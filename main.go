@@ -168,7 +168,7 @@ func serveApplication() {
 	}))
 
 	app.Static("/", "./public")
-	app.Get("/metrics", monitor.New())
+	//app.Get("/metrics", monitor.New())
 	app.Get("/version", func(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{"commit": Commit})
 	})
