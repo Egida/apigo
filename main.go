@@ -197,6 +197,10 @@ func serveApplication() {
 	auth := app.Group("/auth")
 	auth.Post("/token", controller.Token)
 
+	account := app.Group("/account")
+	account.Use(middleware.APIKeyAuthMiddleware)
+	account.Get("/info", controller.ShowUser)
+
 	ddos := app.Group("/ddos")
 	ddos.Use(middleware.APIKeyAuthMiddleware)
 	//ddos.Use(middleware.RequireIP)
