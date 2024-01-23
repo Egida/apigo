@@ -32,6 +32,6 @@ func Token(c *fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"token": apiKey.Token,
-		"user": user,
+		"success": true,
 	})
 }
