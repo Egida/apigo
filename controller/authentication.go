@@ -19,11 +19,11 @@ func Token(c *fiber.Ctx) error {
 	user, err := model.FindUserByUsername(input.Username)
 
 	if err != nil {
-		return fiber.NewError(fiber.StatusBadRequest, err.Error())
+		return fiber.NewError(fiber.StatusBadRequest, "User was not Found")
 	}
 
 	if err := user.ValidatePassword(input.Password); err != nil {
-		return fiber.NewError(fiber.StatusBadRequest, err.Error())
+		return fiber.NewError(fiber.StatusBadRequest, "Wrong Credentials")
 	}
 
 	apiKey, err := model.FindUserKey(user.ID)
