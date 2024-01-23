@@ -18,7 +18,7 @@ func ShowUser(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"status": fiber.StatusOK,
+		"success": true,
 		"data": map[string]string{
 			"username": user.Username,
 			"email":    user.Email,
