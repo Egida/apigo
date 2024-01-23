@@ -159,7 +159,7 @@ func serveApplication() {
 	app.Use(requestid.New())
 	app.Use(middleware.Logger)
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:     "https://path.dnic.cloud, https://path.dnic.io",
+		AllowOrigins:     "*",
 		AllowMethods:     "PUT,PATCH,POST,GET,OPTIONS,DELETE,HEAD",
 		AllowHeaders:     "bearer,X-Apikey, Content-Type, X-XSRF-TOKEN, Accept, Origin, X-Requested-With, Authorization",
 		ExposeHeaders:    "Content-Length",
