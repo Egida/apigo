@@ -35,7 +35,7 @@ func ChangePassword(c *fiber.Ctx) error {
 	if err != nil {
 		return fiber.NewError(fiber.StatusOK, err.Error())
 	}
-	var password strukt.UpdatePassword //c.FormValue("password")
+	var password strukt.UpdatePassword
 	user, err := model.FindUserByUsername(isuser.User.Username)
 	if err := user.Update(user.Username, user.Email, password.Password, user.Role); err != nil {
 		return err
