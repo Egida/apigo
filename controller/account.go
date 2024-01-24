@@ -2,7 +2,6 @@ package controller
 
 import (
 	"api/model"
-	"api/strukt"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -14,6 +13,7 @@ func ShowUser(c *fiber.Ctx) error {
 	if err != nil {
 		return fiber.NewError(fiber.StatusOK, err.Error())
 	}
+
 	user, err := model.FindUserByUsername(isuser.User.Username)
 	if err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
@@ -34,9 +34,9 @@ func ChangePassword(c *fiber.Ctx) error {
 	if err != nil {
 		return fiber.NewError(fiber.StatusOK, err.Error())
 	}
-	var input strukt.UpdatePassword
+	password := c.FormValue("password")
 	user, err := model.FindUserByUsername(isuser.User.Username)
-	if err := user.Update("", "", input.Password, ""); err != nil {
+	if err := user.Update("", "", password, ""); err != nil {
 		return err
 	}
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{

@@ -201,6 +201,7 @@ func serveApplication() {
 	account.Use(middleware.APIKeyAuthMiddleware)
 	account.Get("/info", controller.ShowUser)
 	account.Post("/password", controller.ChangePassword)
+
 	ddos := app.Group("/ddos")
 	ddos.Use(middleware.APIKeyAuthMiddleware)
 	//ddos.Use(middleware.RequireIP)
