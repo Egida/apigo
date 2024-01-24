@@ -2,6 +2,7 @@ package controller
 
 import (
 	"api/model"
+	"api/strukt"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -24,5 +25,22 @@ func ShowUser(c *fiber.Ctx) error {
 			"email":    user.Email,
 			"role":     string(user.Role),
 		},
+	})
+}
+func ChangePassword(c *fiber.Ctx) error {
+	head := c.GetReqHeaders()
+	token := head["X-Apikey"]
+	isuser, err := model.FindAPIKey(token)
+	if err != nil {
+		return fiber.NewError(fiber.StatusOK, err.Error())
+	}
+	var input strukt.UpdatePassword
+	user, err := model.FindUserByUsername(isuser.User.Username)
+	if err := user.Update("", "", input.Password, ""); err != nil {
+		return err
+	}
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"success": true,
+		"data":    "Password changed successfully",
 	})
 }
