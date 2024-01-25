@@ -221,3 +221,45 @@ func readMultipartFile(header *multipart.FileHeader) (string, error) {
 
 	return string(data), nil
 }
+func GetIncidents(c *fiber.Ctx) error {
+	ip := c.Params("ip")
+	ipadress, err := model.FindByip(ip)
+	if err != nil {
+		return fiber.NewError(fiber.StatusUnauthorized, ipadress.Customer)
+	}
+	head := c.GetReqHeaders()
+	token := head["X-Apikey"]
+
+	isused, err := model.FindAPIKey(token)
+
+	usedemail, err := model.FindUserById(isused.UserID)
+	if err != nil {
+		return fiber.NewError(fiber.StatusUnauthorized, "User not found")
+	}
+
+	if err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, err.Error())
+	}
+	if ipadress.Ip == ip {
+
+		if ipadress.Customer == usedemail.Email || usedemail.IsAdmin == true {
+			routing, err := combahton.GetIncidents(ip)
+			if err != nil {
+				log.Println("ddos.Test error: ", err)
+				log.Printf("ddos.Test error: %v %T\n", err, err)
+				return fiber.NewError(fiber.StatusBadRequest, err.Error())
+			}
+
+			return c.Status(fiber.StatusOK).JSON(fiber.Map{
+				"status": fiber.StatusOK,
+				"result": routing,
+			})
+		} else {
+			return fiber.NewError(fiber.StatusForbidden, "You not authorized using this IP")
+
+		}
+	} else {
+		return fiber.NewError(fiber.StatusBadRequest, "IP not in our System")
+
+	}
+}

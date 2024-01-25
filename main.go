@@ -206,6 +206,7 @@ func serveApplication() {
 	ddos.Use(middleware.APIKeyAuthMiddleware)
 	//ddos.Use(middleware.RequireIP)
 	ddos.Get("/status/:ip", controller.GetRouting)
+	ddos.Get("/incidents/:ip", controller.GetIncidents)
 	ddos.Put("/routing/:ip/:mask", controller.AddRouting)
 	ddos.Post("/vhost/:ip/:mask", controller.AddVhost)
 
