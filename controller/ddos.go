@@ -251,8 +251,8 @@ func GetIncidents(c *fiber.Ctx) error {
 			}
 
 			return c.Status(fiber.StatusOK).JSON(fiber.Map{
-				"succesd": true,
-				"dats": routing,
+				"success": true,
+				"data": routing,
 			})
 		} else {
 			return fiber.NewError(fiber.StatusForbidden, "You not authorized using this IP")
