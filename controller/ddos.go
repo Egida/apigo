@@ -102,7 +102,7 @@ func AddRouting(c *fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"status":  fiber.StatusOK,
+		"success": true ,
 		"message": "Route wurde geändert",
 	})
 }
