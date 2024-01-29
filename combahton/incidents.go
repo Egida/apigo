@@ -9,16 +9,16 @@ import (
 
 type Incident struct {
 	UUID        string    `json:"uuid"`
-	Timestamp   time.Time `json:"@_timestamp"`
-	Timestamp0  time.Time `json:"@timestamp"`
-	Cluster     string    `json:"cluster"`
-	Custom      string    `json:"custom"`
 	IP          string    `json:"ip"`
-	Mbps        string    `json:"mbps"`
-	Method      string    `json:"method"`
 	Mode        string    `json:"mode"`
-	Packetsize  string    `json:"packetsize"`
+	Custom      string    `json:"custom"`
+	Cluster     string    `json:"cluster"`
+	Method      string    `json:"method"`
+	Mbps        string    `json:"mbps"`
 	Pps         string    `json:"pps"`
+	Packetsize  string    `json:"packetsize"`
+	Time        int       `json:"time"`
+	Timestamp   time.Time `json:"@timestamp"`
 	SampleCount int       `json:"sample_count"`
 	Samples     []struct {
 		Bytes      int    `json:"bytes"`
