@@ -46,7 +46,7 @@ func GetRouting(c *fiber.Ctx) error {
 			}
 
 			return c.Status(fiber.StatusOK).JSON(fiber.Map{
-				"sucesd": true,
+				"success": true,
 				"data": routing,
 			})
 		} else {
