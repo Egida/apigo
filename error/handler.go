@@ -35,12 +35,15 @@ func Handler(c *fiber.Ctx, err error) error {
 			"Error":  description,
 		})
 	}
-
-	return c.Status(status).JSON(&model.Error{
-		Error:            http.StatusText(status),
-		ErrorCode:        status,
-		ErrorDescription: description,
+	return c.Status(status).JSON(fiber.Map{
+		"success": true,
+		"data": &model.Error{
+			Error:            http.StatusText(status),
+			ErrorCode:        status,
+			ErrorDescription: description,
+		},
 	})
+
 }
 
 func validationErrorToText(e validator.FieldError) string {
