@@ -46,8 +46,8 @@ func GetRouting(c *fiber.Ctx) error {
 			}
 
 			return c.Status(fiber.StatusOK).JSON(fiber.Map{
-				"status": fiber.StatusOK,
-				"result": routing,
+				"success": true,
+				"data": routing,
 			})
 		} else {
 			return fiber.NewError(fiber.StatusForbidden, "You not authorized using this IP")
