@@ -40,7 +40,7 @@ func Handler(c *fiber.Ctx, err error) error {
 		Error:            http.StatusText(status),
 		ErrorCode:        status,
 		ErrorDescription: description,
-		Success:          false
+		Success:          false,
 	})
 }
 
