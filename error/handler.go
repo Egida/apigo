@@ -36,7 +36,7 @@ func Handler(c *fiber.Ctx, err error) error {
 		})
 	}
 	return c.Status(status).JSON(fiber.Map{
-		"success": true,
+		"success": false,
 		"data": &model.Error{
 			Error:            http.StatusText(status),
 			ErrorCode:        status,
