@@ -41,7 +41,7 @@ func Handler(c *fiber.Ctx, err error) error {
 		ErrorCode:        status,
 		ErrorDescription: description,
 		
-	},"success":false)
+	})
 }
 
 func validationErrorToText(e validator.FieldError) string {
