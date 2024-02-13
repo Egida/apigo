@@ -83,8 +83,8 @@ func GetPathRules(c *fiber.Ctx) error {
 			}
 
 			return c.Status(fiber.StatusOK).JSON(fiber.Map{
-				"sucess": true,
-				"data":   routing,
+				"success": true,
+				"data":    routing,
 			})
 		} else {
 			return fiber.NewError(fiber.StatusForbidden, "You not authorized using this IP")
