@@ -41,8 +41,8 @@ func GetPathIncidents(c *fiber.Ctx) error {
 			}
 
 			return c.Status(fiber.StatusOK).JSON(fiber.Map{
-				"status": fiber.StatusOK,
-				"data":   routing.Data,
+				"success": true,
+				"data":    routing.Data,
 			})
 		} else {
 			return fiber.NewError(fiber.StatusForbidden, "You not authorized using this IP")
@@ -83,7 +83,7 @@ func GetPathRules(c *fiber.Ctx) error {
 			}
 
 			return c.Status(fiber.StatusOK).JSON(fiber.Map{
-				"status": fiber.StatusOK,
+				"sucess": true,
 				"data":   routing,
 			})
 		} else {
@@ -137,7 +137,7 @@ func AddPathRules(c *fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"status":  fiber.StatusOK,
+		"success": true,
 		"message": "Rule was added successfully",
 	})
 }
@@ -171,8 +171,8 @@ func GetRateLimits(c *fiber.Ctx) error {
 			}
 
 			return c.Status(fiber.StatusOK).JSON(fiber.Map{
-				"status": fiber.StatusOK,
-				"data":   routing.RateLimiters,
+				"success": true,
+				"data":    routing.RateLimiters,
 			})
 		} else {
 			return fiber.NewError(fiber.StatusForbidden, "You not authorized using this IP")
@@ -214,8 +214,8 @@ func DeleteRule(c *fiber.Ctx) error {
 			}
 
 			return c.Status(fiber.StatusOK).JSON(fiber.Map{
-				"status": fiber.StatusOK,
-				"data":   routing,
+				"success": true,
+				"data":    routing,
 			})
 		} else {
 			return fiber.NewError(fiber.StatusForbidden, "You not authorized using this IP")
@@ -256,8 +256,8 @@ func GetFilters(c *fiber.Ctx) error {
 			}
 
 			return c.Status(fiber.StatusOK).JSON(fiber.Map{
-				"status": fiber.StatusOK,
-				"data":   routing,
+				"success": true,
+				"data":    routing,
 			})
 		} else {
 			return fiber.NewError(fiber.StatusForbidden, "You not authorized using this IP")
@@ -298,8 +298,8 @@ func AvailableFilter(c *fiber.Ctx) error {
 			}
 
 			return c.Status(fiber.StatusOK).JSON(fiber.Map{
-				"status": fiber.StatusOK,
-				"data":   routing,
+				"success": true,
+				"data":    routing,
 			})
 		} else {
 			return fiber.NewError(fiber.StatusForbidden, "You not authorized using this IP")
@@ -353,7 +353,7 @@ func AddFilter(c *fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"status":  fiber.StatusOK,
+		"success": true,
 		"message": "Rule was added successfully",
 	})
 }
@@ -389,8 +389,8 @@ func DeleteFilter(c *fiber.Ctx) error {
 			}
 
 			return c.Status(fiber.StatusOK).JSON(fiber.Map{
-				"status": fiber.StatusOK,
-				"data":   routing,
+				"success": true,
+				"data":    routing,
 			})
 		} else {
 			return fiber.NewError(fiber.StatusForbidden, "You not authorized using this IP")
@@ -443,7 +443,7 @@ func AddRateLimit(c *fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"status":  fiber.StatusOK,
+		"success": true,
 		"message": "Rule was added successfully",
 	})
 }
@@ -478,8 +478,8 @@ func DeleterRateLimit(c *fiber.Ctx) error {
 			}
 
 			return c.Status(fiber.StatusOK).JSON(fiber.Map{
-				"status": fiber.StatusOK,
-				"data":   routing,
+				"success": true,
+				"data":    routing,
 			})
 		} else {
 			return fiber.NewError(fiber.StatusForbidden, "You not authorized using this IP")
