@@ -11,6 +11,7 @@ import (
 	apierror "api/error"
 	"api/middleware"
 	"api/model"
+	"api/vpn"
 	"fmt"
 	"os"
 	"strings"
@@ -95,6 +96,7 @@ func loadIntegrations() {
 	dynadot.Init()
 	cloudns.Init()
 	active.Init()
+	vpn.Init()
 }
 
 func serveApplication() {
