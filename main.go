@@ -231,6 +231,10 @@ func serveApplication() {
 	domain.Get("/whois/:domain", controller.Whois)
 	domain.Post("/addContact", controller.AddContact)
 
+	vpn := app.Group("/vpn")
+	vpn.Use(middleware.APIKeyAuthMiddleware)
+	vpn.Get("/accounts", controller.GetAccounts)
+
 	dns := app.Group("/dns")
 	dns.Use(middleware.APIKeyAuthMiddleware)
 	dns.Post("/addZone", controller.Addzone)
