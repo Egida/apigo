@@ -1,7 +1,7 @@
 package strukt
 
 type GetAccounts struct {
-	Data []any{} {
+	Data []interface{} {
 		ID           int    `json:"id"`
 		Username     string `json:"username"`
 		Status       string `json:"status"`
