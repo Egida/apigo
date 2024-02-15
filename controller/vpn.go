@@ -15,6 +15,6 @@ func GetAccounts(c *fiber.Ctx) error {
 	}
 	log.Info().Str("client", "vpn").Msgf("%v+\n", output)
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		&output,
+		&output.Data,
 	})
 }
