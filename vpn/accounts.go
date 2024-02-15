@@ -19,5 +19,5 @@ func GetAccounts() (*strukt.GetAccounts, error) {
 		return nil, fmt.Errorf("failed to unmarshal response: %s", err)
 	}
 
-	return response, nil
+	return response.Data, nil
 }
