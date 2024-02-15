@@ -44,7 +44,7 @@ func (c *Client) get(endpoint string) ([]byte, error) {
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set(
 		"Authorization",
-		"Bearer "+c.token(),
+		"Bearer "+c.token,
 	)
 
 	resp := fasthttp.AcquireResponse()
@@ -78,7 +78,7 @@ func (c *Client) post(endpoint string, payload interface{}) ([]byte, error) {
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set(
 		"Authorization",
-		"Bearer "+c.token(),
+		"Bearer "+c.token,
 	)
 	req.SetBody(data)
 
@@ -107,7 +107,7 @@ func (c *Client) delete(endpoint string) ([]byte, error) {
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set(
 		"Authorization",
-		"Bearer "+c.token(),
+		"Bearer "+c.token,
 	)
 
 	resp := fasthttp.AcquireResponse()
@@ -141,7 +141,7 @@ func (c *Client) put(endpoint string, payload interface{}) ([]byte, error) {
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set(
 		"Authorization",
-		"Bearer "+c.token(),
+		"Bearer "+c.token,
 	)
 	req.SetBody(data)
 
