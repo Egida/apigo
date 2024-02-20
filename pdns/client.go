@@ -2,11 +2,11 @@ package pdns
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 
+	jsoniter "github.com/json-iterator/go"
 	"github.com/spf13/viper"
 )
 
@@ -61,7 +61,7 @@ func (c *Client) get(endpoint string) ([]byte, error) {
 func (c *Client) post(endpoint string, payload interface{}) ([]byte, error) {
 	url := c.baseURL + endpoint
 
-	data, err := json.Marshal(payload)
+	data, err := jsoniter.Marshal(payload)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal JSON: %s", err)
 	}
@@ -123,7 +123,7 @@ func (c *Client) delete(endpoint string) ([]byte, error) {
 func (c *Client) patch(endpoint string, payload interface{}) ([]byte, error) {
 	url := c.baseURL + endpoint
 
-	data, err := json.Marshal(payload)
+	data, err := jsoniter.Marshal(payload)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal JSON: %s", err)
 	}
