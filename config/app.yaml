@@ -16,7 +16,7 @@ app:
   adminusername: "admin"
   adminpassword: "admin"
   #powerdnss
-  powerdnsserver: "http://181.214.99.87:8081/api/v1"
+  powerdnsserver: "http://181.214.99.87:8081/api/v1/"
   powerdnskey: "XNYxUKYcsg7BnrQZUaq884JKf3Z5qfZ8"
   #Cloudns
   cloudnsauthid: "7927"
