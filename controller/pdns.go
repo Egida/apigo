@@ -10,7 +10,7 @@ import (
 
 func AddZone(c *fiber.Ctx) error {
 	var input model.AddZoneInput
-	domain := c.Params("domain")
+
 	if err := c.BodyParser(&input); err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
