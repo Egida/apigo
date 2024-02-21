@@ -2,8 +2,9 @@ package pdns
 
 import (
 	"api/model"
-	"encoding/json"
 	"fmt"
+
+	jsoniter "github.com/json-iterator/go"
 )
 
 type Zone struct {
@@ -40,7 +41,7 @@ func ListZones() ([]Zone, error) {
 	}
 
 	var response []Zone
-	err = json.Unmarshal(body, &response)
+	err = jsoniter.Unmarshal(body, &response)
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +57,7 @@ func GetZone(zoneID string) (Zone, error) {
 	}
 
 	var response Zone
-	err = json.Unmarshal(body, &response)
+	err = jsoniter.Unmarshal(body, &response)
 	if err != nil {
 		return Zone{}, err
 	}
@@ -72,7 +73,7 @@ func AddZone(input model.AddZoneInput) (Zone, error) {
 	}
 
 	var response Zone
-	err = json.Unmarshal(body, &response)
+	err = jsoniter.Unmarshal(body, &response)
 	if err != nil {
 		return Zone{}, err
 	}
