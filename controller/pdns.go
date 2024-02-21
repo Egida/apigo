@@ -10,6 +10,7 @@ import (
 
 func AddZone(c *fiber.Ctx) error {
 	var input model.AddZoneInput
+	domain := c.Params("domain")
 	if err := c.BodyParser(&input); err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
@@ -21,7 +22,9 @@ func AddZone(c *fiber.Ctx) error {
 	if input.Kind == "" {
 		input.Kind = "Master"
 	}
-
+	if input.Name == "" {
+		input.Name = domain
+	}
 	if input.NameServers == nil || len(input.NameServers) == 0 {
 		input.NameServers = []string{"ns1.dnic.icu.", "ns2.dnic.icu."}
 	}
@@ -64,5 +67,18 @@ func AddRecord(c *fiber.Ctx) error {
 		"status":  http.StatusCreated,
 		"message": "Record wurde erstellt",
 		"result":  zone.RRsets,
+	})
+}
+func RemoveZone(c *fiber.Ctx) error {
+	domain := c.Params("domain")
+
+	err := pdns.RemoveZone(domain)
+	if err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, err.Error())
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"success": true,
+		"message": "Zone wurde gelöscht",
 	})
 }

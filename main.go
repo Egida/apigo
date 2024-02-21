@@ -11,6 +11,7 @@ import (
 	apierror "api/error"
 	"api/middleware"
 	"api/model"
+	"api/pdns"
 	"api/vpn"
 	"fmt"
 	"os"
@@ -97,6 +98,7 @@ func loadIntegrations() {
 	cloudns.Init()
 	active.Init()
 	vpn.Init()
+	pdns.Init()
 }
 
 func serveApplication() {
@@ -239,9 +241,9 @@ func serveApplication() {
 
 	dns := app.Group("/dns")
 	dns.Use(middleware.APIKeyAuthMiddleware)
-	dns.Post("/addZone", controller.Addzone)
-	dns.Delete("/deleteZone/:domain", controller.Deletezone)
-	dns.Post("/addRecord", controller.Addrecord)
+	dns.Post("/zone", controller.AddZone)
+	dns.Delete("/delete/:domain", controller.RemoveZone)
+	dns.Post("/record/:domain", controller.AddRecord)
 
 	health := app.Group("/")
 	health.Use(middleware.APIKeyAuthMiddleware)

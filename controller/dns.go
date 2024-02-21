@@ -7,7 +7,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func Addzone(c *fiber.Ctx) error {
+func AddCloudzone(c *fiber.Ctx) error {
 	domain := c.FormValue("domain")
 
 	output, err := cloudns.AddZone(domain)
@@ -19,7 +19,7 @@ func Addzone(c *fiber.Ctx) error {
 		"data": &output,
 	})
 }
-func Deletezone(c *fiber.Ctx) error {
+func DeleteCloudzone(c *fiber.Ctx) error {
 	domain := c.FormValue("domain")
 
 	output, err := cloudns.DeleteCloudZone(domain)
@@ -31,7 +31,7 @@ func Deletezone(c *fiber.Ctx) error {
 		"data": &output,
 	})
 }
-func Addrecord(c *fiber.Ctx) error {
+func AddCloudrecord(c *fiber.Ctx) error {
 	domain := c.FormValue("domain")
 	r_type := c.FormValue("rtype")
 	host := c.FormValue("host")
