@@ -241,7 +241,7 @@ func serveApplication() {
 
 	dns := app.Group("/dns")
 	dns.Use(middleware.APIKeyAuthMiddleware)
-	dns.Post("/zone", controller.AddZone)
+	dns.Post("/zone/:domain", controller.AddZone)
 	dns.Delete("/delete/:domain", controller.RemoveZone)
 	dns.Post("/record/:domain", controller.AddRecord)
 
