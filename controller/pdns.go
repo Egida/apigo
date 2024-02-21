@@ -22,9 +22,7 @@ func AddZone(c *fiber.Ctx) error {
 	if input.Kind == "" {
 		input.Kind = "Master"
 	}
-	if input.Name == "" {
-		input.Name = domain + "."
-	}
+
 	if input.NameServers == nil || len(input.NameServers) == 0 {
 		input.NameServers = []string{"ns1.dnic.icu.", "ns2.dnic.icu."}
 	}
