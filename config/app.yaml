@@ -16,7 +16,7 @@ app:
   adminusername: "admin"
   adminpassword: "admin"
   #powerdnss
-  powerdnsserver: "https://nscontrol.dnic.tech/api/v1/servers/localhost"
+  powerdnsserver: "https://nscontrol.dnic.tech/api/v1"
   powerdnskey: "OEFiU2g2VTRBY1J1YW9"
   #Cloudns
   cloudnsauthid: "7927"
