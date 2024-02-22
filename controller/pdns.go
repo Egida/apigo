@@ -26,7 +26,7 @@ func AddZone(c *fiber.Ctx) error {
 		input.NameServers = []string{"ns1.dnic.icu.", "ns2.dnic.icu."}
 	}
 
-	zone, err := pdns.AddZone(input)
+	zone, err := pdns.Add(input)
 	if err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}

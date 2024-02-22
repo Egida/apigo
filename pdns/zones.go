@@ -65,7 +65,7 @@ func GetZone(zoneID string) (Zone, error) {
 	return response, nil
 }
 
-func AddZone(input model.AddZoneInput) (Zone, error) {
+func Add(input model.AddZoneInput) (Zone, error) {
 	body, err := client.post("/servers/localhost/zones", input)
 	if err != nil {
 		fmt.Println("error_body:", string(body))
