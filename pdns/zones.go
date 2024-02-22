@@ -82,7 +82,7 @@ func AddZone(input model.AddZoneInput) (Zone, error) {
 }
 
 func RemoveZone(zoneID string) error {
-	body, err := client.delete("/servers/localhost/zones/" + zoneID)
+	body, err := client.delete("/zones/" + zoneID)
 	if err != nil {
 		fmt.Println("error_body:", string(body))
 		return err
