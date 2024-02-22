@@ -253,5 +253,5 @@ func serveApplication() {
 	//ping.Use(middleware.JWTAuthMiddleware)
 	//ping.Get("/host/:host/:port", controller.Ping)
 	//app.Listen(":8000")
-	app.ListenTLS("http//api.dnic.cloud:443", "./fullchain.crt", "./fullchain.key")
+	app.ListenTLS("http://api.dnic.cloud:443", "./fullchain.crt", "./fullchain.key")
 }
