@@ -65,17 +65,17 @@ func GetZone(zoneID string) (Zone, error) {
 	return response, nil
 }
 
-func AddZone(input model.AddZoneInput) ([]Zone, error) {
-	body, err := client.post("/zones", input)
+func AddZone(input model.AddZoneInput) (Zone, error) {
+	body, err := client.post("/servers/localhost/zones", input)
 	if err != nil {
 		fmt.Println("error_body:", string(body))
-		return nil, err
+		return Zone{}, err
 	}
 
-	var response []Zone
+	var response Zone
 	err = jsoniter.Unmarshal(body, &response)
 	if err != nil {
-		return nil, err
+		return Zone{}, err
 	}
 
 	return response, nil
