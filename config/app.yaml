@@ -16,8 +16,8 @@ app:
   adminusername: "admin"
   adminpassword: "admin"
   #powerdnss
-  powerdnsserver: "http://181.214.99.87:8081/api/v1"
-  powerdnskey: "XNYxUKYcsg7BnrQZUaq884JKf3Z5qfZ8"
+  powerdnsserver: "http://nscontrol.dnic.tech/api/v1/servers/localhost"
+  powerdnskey: "OEFiU2g2VTRBY1J1YW9"
   #Cloudns
   cloudnsauthid: "7927"
   cloudnsauthpass: "Maikomania18"
