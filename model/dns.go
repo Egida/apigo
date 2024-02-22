@@ -1,11 +1,11 @@
 package model
 
 type AddZoneInput struct {
-	Name        string   `json:"name" validate:"required"`
-	Kind        string   `json:"kind"`
-	Masters     []string `json:"masters"`
-	DNSSEC      bool     `json:"dnssec"`
-	NameServers []string `json:"nameservers"`
+	Name        string        `json:"name" validate:"required"`
+	Kind        string        `json:"kind"`
+	Masters     []interface{} `json:"masters"`
+	DNSSEC      bool          `json:"dnssec"`
+	NameServers []string      `json:"nameservers"`
 }
 
 type AddRecodInput struct {

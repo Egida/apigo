@@ -66,7 +66,7 @@ func GetZone(zoneID string) (Zone, error) {
 }
 
 func AddZone(input model.AddZoneInput) (Zone, error) {
-	body, err := client.post("/servers/localhost/zones", input)
+	body, err := client.post("/zones", input)
 	if err != nil {
 		fmt.Println("error_body:", string(body))
 		return Zone{}, err
@@ -82,7 +82,7 @@ func AddZone(input model.AddZoneInput) (Zone, error) {
 }
 
 func RemoveZone(zoneID string) error {
-	body, err := client.delete("/zones/" + zoneID)
+	body, err := client.delete("/servers/localhost/zones/" + zoneID)
 	if err != nil {
 		fmt.Println("error_body:", string(body))
 		return err
