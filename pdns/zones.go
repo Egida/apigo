@@ -22,7 +22,7 @@ type ZoneCreate struct {
 	NotifiedSerial   int64         `json:"notified_serial"`    
 	Nsec3Narrow      bool          `json:"nsec3narrow"`        
 	Nsec3Param       string        `json:"nsec3param"`         
-	Rrsets           []Rcd       `json:"rrsets"`             
+	Rrsets           []RRSets       `json:"rrsets"`             
 	Serial           int64         `json:"serial"`             
 	SlaveTsigKeyIDS  []interface{} `json:"slave_tsig_key_ids"` 
 	SOAEdit          string        `json:"soa_edit"`           
