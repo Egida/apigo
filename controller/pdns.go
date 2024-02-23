@@ -31,7 +31,7 @@ func AddZone(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"status":  http.StatusCreated,
 		"message": "Zone wurde erstellt",
 		"result":  zone,
