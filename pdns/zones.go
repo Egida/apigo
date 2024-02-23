@@ -7,31 +7,7 @@ import (
 	jsoniter "github.com/json-iterator/go"
 )
 
-type Zone struct {
-	ID               string   `json:"id"`
-	Name             string   `json:"name"`
-	Type             string   `json:"type,omitempty"`
-	URL              string   `json:"url"`
-	Kind             string   `json:"kind"`
-	RRsets           []RRSet  `json:"rrsets,omitempty"`
-	Serial           int      `json:"serial"`
-	NotifiedSerial   int      `json:"notified_serial"`
-	EditedSerial     int      `json:"edited_serial"`
-	Masters          []string `json:"masters"`
-	DNSSEC           bool     `json:"dnssec"`
-	NSEC3Param       string   `json:"nsec3param,omitempty"`
-	NSEC3Narrow      bool     `json:"nsec3narrow,omitempty"`
-	Presigned        bool     `json:"presigned,omitempty"`
-	SOAEdit          string   `json:"soa_edit,omitempty"`
-	SOAEditAPI       string   `json:"soa_edit_api,omitempty"`
-	APIRectify       bool     `json:"api_rectify,omitempty"`
-	Zone             string   `json:"zone,omitempty"`
-	Catalog          string   `json:"catalog,omitempty"`
-	Account          string   `json:"account,omitempty"`
-	NameServers      []string `json:"nameservers,omitempty"`
-	MasterTSIGKeyIDs []string `json:"master_tsig_key_ids,omitempty"`
-	SlaveTSIGKeyIDs  []string `json:"slave_tsig_key_ids,omitempty"`
-}
+
 type ZoneCreate struct {
 	Account          string        `json:"account"`            
 	APIRectify       bool          `json:"api_rectify"`        
@@ -46,7 +22,7 @@ type ZoneCreate struct {
 	NotifiedSerial   int64         `json:"notified_serial"`    
 	Nsec3Narrow      bool          `json:"nsec3narrow"`        
 	Nsec3Param       string        `json:"nsec3param"`         
-	Rrsets           []Rrset       `json:"rrsets"`             
+	Rrsets           []Rcd       `json:"rrsets"`             
 	Serial           int64         `json:"serial"`             
 	SlaveTsigKeyIDS  []interface{} `json:"slave_tsig_key_ids"` 
 	SOAEdit          string        `json:"soa_edit"`           
@@ -54,15 +30,15 @@ type ZoneCreate struct {
 	URL              string        `json:"url"`                
 }
 
-type Rrset struct {
+type Rcd struct {
 	Comments []interface{} `json:"comments"`
 	Name     string        `json:"name"`    
-	Records  []Record      `json:"records"` 
+	Records  []Rec     `json:"records"` 
 	TTL      int64         `json:"ttl"`     
 	Type     string        `json:"type"`    
 }
 
-type Record struct {
+type Rec struct {
 	Content  string `json:"content"` 
 	Disabled bool   `json:"disabled"`
 }
