@@ -75,22 +75,21 @@ func GetZone(zoneID string) (ZoneCreate, error) {
 	return response, nil
 }
 
+
 func Add(input model.AddZoneInput) (ZoneCreate, error) {
-	body, err := client.post("servers/localhost/zones", input)
+	body, err := client.put("servers/localhost/zones", input)
 	if err != nil {
-		fmt.Println("error_body:", string(body))
 		return ZoneCreate{}, err
 	}
 
-	var response ZoneCreate
+	var response ZoneCreate[]
 	err = jsoniter.Unmarshal(body, &response)
 	if err != nil {
-		return nil, err
+		return ZoneCreate{}, fmt.Errorf("failed to unmarshal response: %s", err)
 	}
 
 	return response, nil
 }
-
 func RemoveZone(zoneID string) error {
 	body, err := client.delete("/servers/localhost/zones/" + zoneID)
 	if err != nil {
