@@ -82,7 +82,7 @@ func Add(input model.AddZoneInput) (ZoneCreate, error) {
 		return ZoneCreate{}, err
 	}
 
-	var response Zone
+	var response ZoneCreate
 	err = jsoniter.Unmarshal(body, &response)
 	if err != nil {
 		return ZoneCreate{}, err
