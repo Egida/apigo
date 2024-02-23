@@ -43,7 +43,7 @@ type Rec struct {
 	Disabled bool   `json:"disabled"`
 }
 
-func ListZones() (*ZoneCreate, error) {
+func ListZones() (ZoneCreate, error) {
 	body, err := client.get("/servers/localhost/zones")
 	if err != nil {
 		fmt.Println("error_body:", string(body))
@@ -59,7 +59,7 @@ func ListZones() (*ZoneCreate, error) {
 	return response, nil
 }
 
-func GetZone(zoneID string) (*ZoneCreate, error) {
+func GetZone(zoneID string) (ZoneCreate, error) {
 	body, err := client.get("/servers/localhost/zones/" + zoneID)
 	if err != nil {
 		fmt.Println("error_body:", string(body))
@@ -75,7 +75,7 @@ func GetZone(zoneID string) (*ZoneCreate, error) {
 	return response, nil
 }
 
-func Add(input model.AddZoneInput) (*ZoneCreate, error) {
+func Add(input model.AddZoneInput) (ZoneCreate, error) {
 	body, err := client.post("servers/localhost/zones", input)
 	if err != nil {
 		fmt.Println("error_body:", string(body))
