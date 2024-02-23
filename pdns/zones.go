@@ -43,14 +43,14 @@ type Rec struct {
 	Disabled bool   `json:"disabled"`
 }
 
-func ListZones() ([]ZoneCreate, error) {
+func ListZones() (*ZoneCreate, error) {
 	body, err := client.get("/servers/localhost/zones")
 	if err != nil {
 		fmt.Println("error_body:", string(body))
 		return nil, err
 	}
 
-	var response []ZoneCreate
+	var response *ZoneCreate
 	err = jsoniter.Unmarshal(body, &response)
 	if err != nil {
 		return nil, err
@@ -59,14 +59,14 @@ func ListZones() ([]ZoneCreate, error) {
 	return response, nil
 }
 
-func GetZone(zoneID string) (ZoneCreate, error) {
+func GetZone(zoneID string) (*ZoneCreate, error) {
 	body, err := client.get("/servers/localhost/zones/" + zoneID)
 	if err != nil {
 		fmt.Println("error_body:", string(body))
 		return ZoneCreate{}, err
 	}
 
-	var response []ZoneCreate
+	var response *ZoneCreate
 	err = jsoniter.Unmarshal(body, &response)
 	if err != nil {
 		return ZoneCreate{}, err
