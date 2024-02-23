@@ -54,7 +54,7 @@ func Add(input model.AddZoneInput) (*ZoneCreate, error) {
 	var response *ZoneCreate
 	err = jsoniter.Unmarshal(body, &response)
 	if err != nil {
-		return ZoneCreate, fmt.Errorf("failed to unmarshal response: %s", err)
+		return *ZoneCreate, fmt.Errorf("failed to unmarshal response: %s", err)
 	}
 
 	return &response, nil
