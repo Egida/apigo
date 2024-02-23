@@ -63,7 +63,7 @@ func AddRecord(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"status":  http.StatusCreated,
 		"message": "Record wurde erstellt",
-		"result":  zone.RRsets,
+		"result":  zone.RRset,
 	})
 }
 func RemoveZone(c *fiber.Ctx) error {
