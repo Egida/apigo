@@ -2,7 +2,6 @@ package controller
 
 import (
 	"api/model"
-	"api/pdns"
 	"context"
 	"net/http"
 
@@ -29,11 +28,25 @@ func AddZone(c *fiber.Ctx) error {
 		"result":  zone,
 	})
 }
+func RemoveZone(c *fiber.Ctx) error {
+	domain := c.Params("domain")
+	pwdns := powerdns.NewClient(viper.GetString("app.powerdnsserver"), "localhost", map[string]string{"X-API-Key": viper.GetString("app.powerdnskey")}, nil)
+	ctx := context.Background()
+	err := pwdns.Zones.Delete(ctx, domain)
+	if err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, err.Error())
+	}
 
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"success": true,
+		"message": "Zone wurde gelöscht",
+	})
+}
 func AddRecord(c *fiber.Ctx) error {
 	domain := c.Params("domain")
-
-	var input model.AddRecodInput
+	pwdns := powerdns.NewClient(viper.GetString("app.powerdnsserver"), "localhost", map[string]string{"X-API-Key": viper.GetString("app.powerdnskey")}, nil)
+	ctx := context.Background()
+	var input model.RecordIn
 	if err := c.BodyParser(&input); err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
@@ -42,12 +55,7 @@ func AddRecord(c *fiber.Ctx) error {
 		return err
 	}
 
-	err := pdns.AddRRSets(domain, input)
-	if err != nil {
-		return fiber.NewError(fiber.StatusBadRequest, err.Error())
-	}
-
-	zone, err := pdns.GetZone(domain)
+	err := pwdns.Records.Add(ctx, domain, input.Name+domain, powerdns.RRType(input.Type), uint32(input.TTL), []string{input.Data})
 	if err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
@@ -55,19 +63,5 @@ func AddRecord(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"status":  http.StatusCreated,
 		"message": "Record wurde erstellt",
-		"result":  zone,
-	})
-}
-func RemoveZone(c *fiber.Ctx) error {
-	domain := c.Params("domain")
-
-	err := pdns.RemoveZone(domain)
-	if err != nil {
-		return fiber.NewError(fiber.StatusBadRequest, err.Error())
-	}
-
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"success": true,
-		"message": "Zone wurde gelöscht",
 	})
 }

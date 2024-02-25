@@ -8,6 +8,12 @@ type AddZoneInput struct {
 	NameServers []string      `json:"nameservers"`
 }
 
+type RecordIn struct {
+	Type string `json:"type"`
+	Name string `json:"name"`
+	TTL  int    `json:"ttl"`
+	Data string `json:"data"`
+}
 type AddRecodInput struct {
 	RRSets []struct {
 		Name       string `json:"name" validate:"required"`
