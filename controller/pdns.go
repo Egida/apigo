@@ -42,6 +42,7 @@ func RemoveZone(c *fiber.Ctx) error {
 		"message": "Zone wurde gelöscht",
 	})
 }
+
 func AddRecord(c *fiber.Ctx) error {
 	domain := c.Params("domain")
 	pwdns := powerdns.NewClient(viper.GetString("app.powerdnsserver"), "localhost", map[string]string{"X-API-Key": viper.GetString("app.powerdnskey")}, nil)
@@ -55,7 +56,7 @@ func AddRecord(c *fiber.Ctx) error {
 		return err
 	}
 
-	err := pwdns.Records.Add(ctx, domain, input.Name+domain, powerdns.RRType(input.Type), uint32(input.TTL), []string{input.Data})
+	err := pwdns.Records.Add(ctx, domain, input.Name+"."+domain, powerdns.RRType(input.Type), uint32(input.TTL), []string{input.Data})
 	if err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
