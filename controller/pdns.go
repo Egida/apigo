@@ -17,7 +17,7 @@ func AddZone(c *fiber.Ctx) error {
 	pwdns := powerdns.NewClient(viper.GetString("app.powerdnsserver"), "localhost", map[string]string{"X-API-Key": viper.GetString("app.powerdnskey")}, nil)
 	ctx := context.Background()
 
-	zone, err := pwdns.Zones.AddMaster(ctx, domain, true, "", false, "", "INCEPTION", true, []string{"ns1.dnic.icu.", "ns2.dnic.icu."})
+	zone, err := pwdns.Zones.AddMaster(ctx, domain, true, "", false, "", "INCEPTION-INCREMENT", true, []string{"ns1.dnic.icu.", "ns2.dnic.icu."})
 	if err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
