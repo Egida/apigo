@@ -8,29 +8,35 @@ import (
 )
 
 type Zone struct {
-	ID               string   `json:"id"`
-	Name             string   `json:"name"`
-	Type             string   `json:"type,omitempty"`
-	URL              string   `json:"url"`
-	Kind             string   `json:"kind"`
-	RRsets           []RRSet  `json:"rrsets,omitempty"`
-	Serial           int      `json:"serial"`
-	NotifiedSerial   int      `json:"notified_serial"`
-	EditedSerial     int      `json:"edited_serial"`
-	Masters          []string `json:"masters"`
-	DNSSEC           bool     `json:"dnssec"`
-	NSEC3Param       string   `json:"nsec3param,omitempty"`
-	NSEC3Narrow      bool     `json:"nsec3narrow,omitempty"`
-	Presigned        bool     `json:"presigned,omitempty"`
-	SOAEdit          string   `json:"soa_edit,omitempty"`
-	SOAEditAPI       string   `json:"soa_edit_api,omitempty"`
-	APIRectify       bool     `json:"api_rectify,omitempty"`
-	Zone             string   `json:"zone,omitempty"`
-	Catalog          string   `json:"catalog,omitempty"`
-	Account          string   `json:"account,omitempty"`
-	NameServers      []string `json:"nameservers,omitempty"`
-	MasterTSIGKeyIDs []string `json:"master_tsig_key_ids,omitempty"`
-	SlaveTSIGKeyIDs  []string `json:"slave_tsig_key_ids,omitempty"`
+	Account          string        `json:"account"`
+	APIRectify       bool          `json:"api_rectify"`
+	Catalog          string        `json:"catalog"`
+	Dnssec           bool          `json:"dnssec"`
+	EditedSerial     int           `json:"edited_serial"`
+	ID               string        `json:"id"`
+	Kind             string        `json:"kind"`
+	LastCheck        int           `json:"last_check"`
+	MasterTsigKeyIds []interface{} `json:"master_tsig_key_ids"`
+	Masters          []interface{} `json:"masters"`
+	Name             string        `json:"name"`
+	NotifiedSerial   int           `json:"notified_serial"`
+	Nsec3Narrow      bool          `json:"nsec3narrow"`
+	Nsec3Param       string        `json:"nsec3param"`
+	Rrsets           []struct {
+		Comments []interface{} `json:"comments"`
+		Name     string        `json:"name"`
+		Records  []struct {
+			Content  string `json:"content"`
+			Disabled bool   `json:"disabled"`
+		} `json:"records"`
+		TTL  int    `json:"ttl"`
+		Type string `json:"type"`
+	} `json:"rrsets"`
+	Serial          int           `json:"serial"`
+	SlaveTsigKeyIds []interface{} `json:"slave_tsig_key_ids"`
+	SoaEdit         string        `json:"soa_edit"`
+	SoaEditAPI      string        `json:"soa_edit_api"`
+	URL             string        `json:"url"`
 }
 
 func ListZones() ([]Zone, error) {
@@ -75,10 +81,10 @@ func Add(input model.AddZoneInput) (Zone, error) {
 	var response Zone
 	err = jsoniter.Unmarshal(body, &response)
 	if err != nil {
-		return Zone{}, err
+		return Zone{}, fmt.Errorf("failed to unmarshal response: %s", err)
 	}
 
-	return response, nil
+	return response, err
 }
 
 func RemoveZone(zoneID string) error {
