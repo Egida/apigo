@@ -3,30 +3,22 @@ package controller
 import (
 	"api/model"
 	"api/pdns"
+	"context"
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/joeig/go-powerdns/v3"
+	"github.com/spf13/viper"
 )
 
 func AddZone(c *fiber.Ctx) error {
-	var input model.AddZoneInput
-	if err := c.BodyParser(&input); err != nil {
-		return fiber.NewError(fiber.StatusBadRequest, err.Error())
-	}
 
-	if err := model.Validate.Struct(&input); err != nil {
-		return err
-	}
+	domain := c.Params("domain")
 
-	if input.Kind == "" {
-		input.Kind = "Master"
-	}
+	pwdns := powerdns.NewClient(viper.GetString("app.powerdnsserver"), "localhost", map[string]string{"X-API-Key": viper.GetString("app.powerdnskey")}, nil)
+	ctx := context.Background()
 
-	if input.NameServers == nil || len(input.NameServers) == 0 {
-		input.NameServers = []string{"ns1.dnic.icu.", "ns2.dnic.icu."}
-	}
-
-	zone, err := pdns.Add(input)
+	zone, err := pwdns.Zones.AddMaster(ctx, domain, true, "", false, "foo", "foo", true, []string{"ns1.dnic.icu.", "ns2.dnic.icu."})
 	if err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
