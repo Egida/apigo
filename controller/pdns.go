@@ -89,7 +89,7 @@ func RemoveRecord(c *fiber.Ctx) error {
 	})
 }
 func SetPTR(c *fiber.Ctx) error {
-	domain := c.Params("domain")
+	domain := c.Params("zone")
 	pwdns := powerdns.NewClient(viper.GetString("app.powerdnsserver"), "localhost", map[string]string{"X-API-Key": viper.GetString("app.powerdnskey")}, nil)
 	ctx := context.Background()
 	var input model.RecordIn
