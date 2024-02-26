@@ -14,6 +14,10 @@ type RecordIn struct {
 	TTL  int    `json:"ttl"`
 	Data string `json:"data"`
 }
+type RecordDeletIn struct {
+	Type string `json:"type"`
+	Name string `json:"name"`
+}
 type AddRecodInput struct {
 	RRSets []struct {
 		Name       string `json:"name" validate:"required"`
