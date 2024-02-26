@@ -93,6 +93,7 @@ func AddRecord(c *fiber.Ctx) error {
 	})
 }
 func AddZZ(c *fiber.Ctx) error {
+	domain := c.Params("domain")
 	var input model.AddZoneInput
 	if err := c.BodyParser(&input); err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
@@ -105,7 +106,9 @@ func AddZZ(c *fiber.Ctx) error {
 	if input.Kind == "" {
 		input.Kind = "Master"
 	}
-
+	if input.Name == "" {
+		input.Kind = domain
+	}
 	if input.NameServers == nil || len(input.NameServers) == 0 {
 		input.NameServers = []string{"ns1.dnic.icu.", "ns2.dnic.icu."}
 	}
