@@ -88,3 +88,25 @@ func RemoveRecord(c *fiber.Ctx) error {
 		"message": "Record wurde gelöscht",
 	})
 }
+func SetPTR(c *fiber.Ctx) error {
+	domain := c.Params("domain")
+	pwdns := powerdns.NewClient(viper.GetString("app.powerdnsserver"), "localhost", map[string]string{"X-API-Key": viper.GetString("app.powerdnskey")}, nil)
+	ctx := context.Background()
+	var input model.RecordIn
+	if err := c.BodyParser(&input); err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, err.Error())
+	}
+
+	if err := model.Validate.Struct(&input); err != nil {
+		return err
+	}
+	err := pwdns.Records.Change(ctx, domain, input.Name+"."+domain, powerdns.RRTypePTR, 60, []string{input.Data})
+	if err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, err.Error())
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"success": true,
+		"message": "Record wurde gelöscht",
+	})
+}
