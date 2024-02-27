@@ -89,24 +89,51 @@ func RemoveRecord(c *fiber.Ctx) error {
 	})
 }
 func SetPTR(c *fiber.Ctx) error {
-	domain := c.Params("zone")
+	id := c.Params("id")
 	pwdns := powerdns.NewClient(viper.GetString("app.powerdnsserver"), "localhost", map[string]string{"X-API-Key": viper.GetString("app.powerdnskey")}, nil)
 	ctx := context.Background()
 	var input model.RecordIn
-	if err := c.BodyParser(&input); err != nil {
-		return fiber.NewError(fiber.StatusBadRequest, err.Error())
+	z, err := model.FindZonebyid(id)
+	if err != nil {
+		return fiber.NewError(fiber.StatusUnauthorized, err.Error())
 	}
+	head := c.GetReqHeaders()
+	token := head["X-Apikey"]
 
-	if err := model.Validate.Struct(&input); err != nil {
-		return err
+	isused, err := model.FindAPIKey(token)
+	usedemail, err := model.FindUserById(isused.UserID)
+	if err != nil {
+		return fiber.NewError(fiber.StatusUnauthorized, "User not found")
 	}
-	err := pwdns.Records.Change(ctx, domain, input.Name+"."+domain, powerdns.RRTypePTR, 60, []string{input.Data + "."})
 	if err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
+	if z.ID == id {
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"success": true,
-		"message": "Ptr was changed",
-	})
+		if z.Customer == usedemail.Email || usedemail.IsAdmin == true {
+			if err := c.BodyParser(&input); err != nil {
+				return fiber.NewError(fiber.StatusBadRequest, err.Error())
+			}
+
+			if err := model.Validate.Struct(&input); err != nil {
+				return err
+			}
+			err := pwdns.Records.Change(ctx, z.Zone, input.Name+"."+z.Zone, powerdns.RRTypePTR, 60, []string{input.Data + "."})
+			if err != nil {
+				return fiber.NewError(fiber.StatusBadRequest, err.Error())
+			}
+
+			return c.Status(fiber.StatusOK).JSON(fiber.Map{
+				"success": true,
+				"message": "Ptr was changed",
+			})
+
+		} else {
+			return fiber.NewError(fiber.StatusForbidden, "You not authorized using this Zone")
+		}
+	} else {
+		return fiber.NewError(fiber.StatusBadRequest, "Zone not in our System")
+
+	}
+
 }

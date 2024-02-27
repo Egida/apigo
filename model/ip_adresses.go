@@ -7,11 +7,14 @@ import (
 )
 
 type Ip_addresses struct {
-	ID         uint   `gorm:"primaryKey"`
+	ID         string `gorm:"primaryKey"`
 	Subnet_id  int    `gorm:"not null"`
 	Ip         string `gorm:"size:45;not null"`
 	Customer   string `gorm:"size:40"`
 	Status     string `gorm:"size:191;not null"`
+	Type       string `gorm:"size:20;not null"`
+	Zone       string `gorm:"size:30;not null"`
+	Zonename   string `gorm:"size:40;not null"`
 	Created_at time.Time
 	Updated_at time.Time
 }
@@ -22,6 +25,15 @@ func FindByip(ip string) (Ip_addresses, error) {
 	if err != nil {
 		return ipadress, err
 	}
+	return ipadress, nil
+}
+func FindZonebyid(id string) (Ip_addresses, error) {
+	var ipadress Ip_addresses
+	err := db1.Db1.Where("id=?", id).Find(&ipadress).Error
+	if err != nil {
+		return ipadress, err
+	}
+
 	return ipadress, nil
 }
 func userip(ip string, email string) (Ip_addresses, error) {
