@@ -5,7 +5,7 @@ app:
   layer7template: "aecfff13-109c-436a-a02e-f6d4315d6c72"
   #DB Connectionstring
   dbconnectionstring: "apigo:Maikomania18@tcp(5.252.101.88:3306)/apigo?charset=utf8mb4&parseTime=True&loc=Local"
-  dbdb1: "db1:Maikomania18@tcp(5.252.101.88:3306)/db1?charset=utf8mb4&parseTime=True&loc=Local"
+  dbdb1: "db1:Maikomania18@tcp(45.135.203.230:3306)/db1?charset=utf8mb4&parseTime=True&loc=Local"
   #JWT Private Key
   privatkey: "hwurenjwnfwer39rupp@lk0qei0"
   #dynadot
