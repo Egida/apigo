@@ -132,7 +132,7 @@ func SetPTR(c *fiber.Ctx) error {
 			return fiber.NewError(fiber.StatusForbidden, "You not authorized using this Zone")
 		}
 	} else {
-		return fiber.NewError(fiber.StatusBadRequest, z.Zone)
+		return fiber.NewError(fiber.StatusBadRequest, "Ip not in our System")
 
 	}
 
