@@ -8,35 +8,30 @@ import (
 )
 
 type Zone struct {
-	Account          string        `json:"account"`
-	APIRectify       bool          `json:"api_rectify"`
-	Catalog          string        `json:"catalog"`
-	Dnssec           bool          `json:"dnssec"`
-	EditedSerial     int           `json:"edited_serial"`
-	ID               string        `json:"id"`
-	Kind             string        `json:"kind"`
-	LastCheck        int           `json:"last_check"`
-	MasterTsigKeyIds []interface{} `json:"master_tsig_key_ids"`
-	Masters          []interface{} `json:"masters"`
-	Name             string        `json:"name"`
-	NotifiedSerial   int           `json:"notified_serial"`
-	Nsec3Narrow      bool          `json:"nsec3narrow"`
-	Nsec3Param       string        `json:"nsec3param"`
-	Rrsets           []struct {
-		Comments []interface{} `json:"comments"`
-		Name     string        `json:"name"`
-		Records  []struct {
+	Account        string `json:"account"`
+	APIRectify     bool   `json:"api_rectify"`
+	Catalog        string `json:"catalog"`
+	Dnssec         bool   `json:"dnssec"`
+	EditedSerial   int64  `json:"edited_serial"`
+	ID             string `json:"id"`
+	Kind           string `json:"kind"`
+	Name           string `json:"name"`
+	NotifiedSerial int64  `json:"notified_serial"`
+	Nsec3narrow    bool   `json:"nsec3narrow"`
+	Nsec3param     string `json:"nsec3param"`
+	Rrsets         []struct {
+		Name    string `json:"name"`
+		Records []struct {
 			Content  string `json:"content"`
 			Disabled bool   `json:"disabled"`
 		} `json:"records"`
-		TTL  int    `json:"ttl"`
+		TTL  int64  `json:"ttl"`
 		Type string `json:"type"`
 	} `json:"rrsets"`
-	Serial          int           `json:"serial"`
-	SlaveTsigKeyIds []interface{} `json:"slave_tsig_key_ids"`
-	SoaEdit         string        `json:"soa_edit"`
-	SoaEditAPI      string        `json:"soa_edit_api"`
-	URL             string        `json:"url"`
+	Serial     int64  `json:"serial"`
+	SoaEdit    string `json:"soa_edit"`
+	SoaEditAPI string `json:"soa_edit_api"`
+	URL        string `json:"url"`
 }
 
 func ListZones() ([]Zone, error) {
