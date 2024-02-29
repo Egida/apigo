@@ -68,7 +68,6 @@ func (c *Client) post(endpoint string, payload any) ([]byte, error) {
 	req.SetRequestURI(url)
 	req.Header.SetMethod(fasthttp.MethodPost)
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Accept", "application/json")
 	req.Header.Set("X-API-Key", c.apikey)
 	req.SetBody(data)
 
