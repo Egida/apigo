@@ -56,7 +56,7 @@ func (c *Client) get(endpoint string) ([]byte, error) {
 	return resp.Body(), nil
 }
 
-func (c *Client) post(endpoint string, payload interface{}) ([]byte, error) {
+func (c *Client) post(endpoint string, payload any) ([]byte, error) {
 	url := c.baseURL + endpoint
 
 	data, err := jsoniter.Marshal(payload)
