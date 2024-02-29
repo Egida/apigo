@@ -12,6 +12,7 @@ import (
 	"api/middleware"
 	"api/model"
 	"api/pdns"
+	"api/synlinq"
 	"api/vpn"
 	"fmt"
 	"os"
@@ -99,6 +100,7 @@ func loadIntegrations() {
 	active.Init()
 	vpn.Init()
 	pdns.Init()
+	synlinq.Init()
 }
 
 func serveApplication() {
@@ -241,7 +243,7 @@ func serveApplication() {
 
 	dns := app.Group("/dns")
 	dns.Use(middleware.APIKeyAuthMiddleware)
-	dns.Post("/zone/:domain", controller.AddZone)
+	dns.Post("/zone/add", controller.CZone)
 	dns.Delete("/zone/:domain", controller.RemoveZone)
 	dns.Post("/record/:domain", controller.AddRecord)
 	dns.Delete("/record/:domain", controller.RemoveRecord)
