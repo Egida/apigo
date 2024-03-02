@@ -42,7 +42,7 @@ func CZone(c *fiber.Ctx) error {
 	})
 }
 func ChangePtr(c *fiber.Ctx) error {
-	var input model.RecordIn
+
 	ipid := c.Params("id")
 	head := c.GetReqHeaders()
 	token := head["X-Apikey"]
@@ -55,6 +55,7 @@ func ChangePtr(c *fiber.Ctx) error {
 	}
 	if ipadress.ID == ipid {
 		if ipadress.Customer == usedemail.Email || usedemail.IsAdmin == true {
+			var input model.RecordIn
 			if ipadress.Type == "IPv4" {
 				if err := c.BodyParser(&input); err != nil {
 					return fiber.NewError(fiber.StatusBadRequest, err.Error())
