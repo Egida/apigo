@@ -79,7 +79,7 @@ func (c *Client) post(endpoint string, payload any) ([]byte, error) {
 	}
 	defer fasthttp.ReleaseResponse(resp)
 
-	if resp.StatusCode() != http.StatusOK || http.StatusCreated {
+	if resp.StatusCode() != http.StatusOK || resp.StatusCode() !=http.StatusCreated {
 		log.Error().Bytes("body", resp.Body()).Int("status", resp.StatusCode()).Msg("request failed")
 		return resp.Body(), fmt.Errorf("request failed with status code: %d", resp.StatusCode())
 	}
