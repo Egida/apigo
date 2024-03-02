@@ -85,10 +85,11 @@ func ChangePtr(c *fiber.Ctx) error {
 				}
 				pwdns := powerdns.NewClient(viper.GetString("app.powerdnsserver"), "localhost", map[string]string{"X-API-Key": viper.GetString("app.powerdnskey")}, nil)
 				ctx := context.Background()
-				err := pwdns.Records.Change(ctx, ipadress.Zone, input.Name+"."+ipadress.Zone, powerdns.RRTypePTR, 60, []string{input.Data + "."})
+				err := pwdns.Records.Change(ctx, ipadress.Zone, ipadress.Zonename+"."+ipadress.Zone, powerdns.RRTypePTR, 60, []string{input.Data + "."})
 				if err != nil {
 					return fiber.NewError(fiber.StatusBadRequest, err.Error())
 				}
+
 				return c.Status(fiber.StatusOK).JSON(fiber.Map{
 					"success": true,
 					"message": "Ptr was changed",
