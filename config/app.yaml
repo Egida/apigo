@@ -32,3 +32,6 @@ app:
   #PathActiveservers
   activepathusername: "125271"
   activepathpassword: "7WxcSgVDdjLu37"
+  # netlinq
+  netlinq_url: "https://netlinq.de/api/v1"
+  netlinq_apitoken: "2zbKiKVXvwLiJBjO"
