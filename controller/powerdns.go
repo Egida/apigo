@@ -3,9 +3,13 @@ package controller
 import (
 	"api/model"
 	"api/pdns"
+	"api/synlinq"
+	"context"
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/joeig/go-powerdns/v3"
+	"github.com/spf13/viper"
 )
 
 func CZone(c *fiber.Ctx) error {
@@ -36,4 +40,68 @@ func CZone(c *fiber.Ctx) error {
 		"message": "Zone wurde erstellt",
 		"result":  zone,
 	})
+}
+func ChangePtr(c *fiber.Ctx) error {
+	var input model.RecordIn
+	ipid := c.Params("id")
+	head := c.GetReqHeaders()
+	token := head["X-Apikey"]
+	ipadress, err := model.FindZonebyid(ipid)
+	isused, err := model.FindAPIKey(token)
+	usedemail, err := model.FindUserById(isused.UserID)
+
+	if err != nil {
+		return fiber.NewError(fiber.StatusUnauthorized, ipadress.Customer)
+	}
+	if ipadress.ID == ipid {
+		if ipadress.Customer == usedemail.Email || usedemail.IsAdmin == true {
+			if ipadress.Type == "IPv4" {
+				if err := c.BodyParser(&input); err != nil {
+					return fiber.NewError(fiber.StatusBadRequest, err.Error())
+				}
+
+				if err := model.Validate.Struct(&input); err != nil {
+					return err
+				}
+				//IPv4 Request Synlinq
+				_, err := synlinq.AddPtr(ipadress.Ip, input.Data)
+				if err != nil {
+					return fiber.NewError(fiber.StatusBadRequest, err.Error())
+				}
+				return c.Status(fiber.StatusOK).JSON(fiber.Map{
+					"success": true,
+					"message": "Ptr was changed",
+				})
+			} else {
+				//IPv6 Request Pdns
+
+				if err := c.BodyParser(&input); err != nil {
+					return fiber.NewError(fiber.StatusBadRequest, err.Error())
+				}
+
+				if err := model.Validate.Struct(&input); err != nil {
+					return err
+				}
+				pwdns := powerdns.NewClient(viper.GetString("app.powerdnsserver"), "localhost", map[string]string{"X-API-Key": viper.GetString("app.powerdnskey")}, nil)
+				ctx := context.Background()
+				err := pwdns.Records.Change(ctx, ipadress.Zone, input.Name+"."+ipadress.Zone, powerdns.RRTypePTR, 60, []string{input.Data + "."})
+				if err != nil {
+					return fiber.NewError(fiber.StatusBadRequest, err.Error())
+				}
+				return c.Status(fiber.StatusOK).JSON(fiber.Map{
+					"success": true,
+					"message": "Ptr was changed",
+				})
+			}
+
+		} else {
+
+			return fiber.NewError(fiber.StatusBadRequest, "")
+		}
+
+	} else {
+
+		return fiber.NewError(fiber.StatusBadRequest, "Zone not found")
+	}
+	return nil
 }

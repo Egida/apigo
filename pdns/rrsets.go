@@ -25,7 +25,7 @@ type Comment struct {
 	ModifiedAt int    `json:"modified_at,omitempty"`
 }
 
-func AddRRSets(zoneID string, input model.AddRecodInput) error {
+func AddPtr(zoneID string, input model.AddRecodInput) error {
 	body, err := client.patch("/servers/localhost/zones/"+zoneID, input)
 	if err != nil {
 		fmt.Println("error_body:", string(body))
