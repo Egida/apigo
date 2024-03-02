@@ -246,7 +246,7 @@ func serveApplication() {
 	dns.Post("/zone/:domain", controller.AddZone)
 	//dns.Post("/zone", controller.CZone)
 	dns.Delete("/zone/:domain", controller.RemoveZone)
-	dns.Post("/record/:domain", controller.AddRecord)
+	dns.Post("/record/:domain", controller.Add)
 	dns.Delete("/record/:domain", controller.RemoveRecord)
 	dns.Post("/ptr/:id", controller.SetPTR)
 
