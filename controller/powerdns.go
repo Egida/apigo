@@ -5,6 +5,7 @@ import (
 	"api/pdns"
 	"api/synlinq"
 	"context"
+	"net"
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
@@ -42,21 +43,22 @@ func CZone(c *fiber.Ctx) error {
 	})
 }
 func ChangePtr(c *fiber.Ctx) error {
+	ip := c.Params("ip")
+	ips := net.ParseIP(ip)
 
-	ipid := c.Params("ip")
 	head := c.GetReqHeaders()
 	token := head["X-Apikey"]
-	ipadress, err := model.FindByip(ipid)
+	ipadress, err := model.FindByip(ip)
 	isused, err := model.FindAPIKey(token)
 	usedemail, err := model.FindUserById(isused.UserID)
 
 	if err != nil {
 		return fiber.NewError(fiber.StatusUnauthorized, ipadress.Customer)
 	}
-	if ipadress.Ip == ipid {
+	if ipadress.Ip == ip {
 		if ipadress.Customer == usedemail.Email || usedemail.IsAdmin == true {
 			var input model.RecordIn
-			if ipadress.Type == "IPv4" {
+			if ips.To4() != nil {
 				if err := c.BodyParser(&input); err != nil {
 					return fiber.NewError(fiber.StatusBadRequest, err.Error())
 				}
