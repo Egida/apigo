@@ -6,7 +6,7 @@ import (
 	"api/synlinq"
 	"context"
 	"net/http"
-
+        "net"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joeig/go-powerdns/v3"
 	"github.com/spf13/viper"
@@ -49,14 +49,15 @@ func ChangePtr(c *fiber.Ctx) error {
 	ipadress, err := model.FindByip(ipid)
 	isused, err := model.FindAPIKey(token)
 	usedemail, err := model.FindUserById(isused.UserID)
-
+        ip := net.ParseIP(ipid)
+	
 	if err != nil {
 		return fiber.NewError(fiber.StatusUnauthorized, ipadress.Customer)
 	}
 	if ipadress.Ip == ipid {
 		if ipadress.Customer == usedemail.Email || usedemail.IsAdmin == true {
 			var input model.RecordIn
-			if ipadress.Type == "IPv4" {
+			if ip.To4() != nil {
 				if err := c.BodyParser(&input); err != nil {
 					return fiber.NewError(fiber.StatusBadRequest, err.Error())
 				}
