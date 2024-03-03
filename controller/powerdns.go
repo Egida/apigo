@@ -51,7 +51,7 @@ func ChangePtr(c *fiber.Ctx) error {
 	ipadress, err := model.FindByip(ip)
 	isused, err := model.FindAPIKey(token)
 	usedemail, err := model.FindUserById(isused.UserID)
-	ip = net.ParseIP(ipid)
+	ips = net.ParseIP(ip)
 
 	if err != nil {
 		return fiber.NewError(fiber.StatusUnauthorized, ipadress.Customer)
