@@ -27,7 +27,7 @@ func FindByip(ip string) (Ip_addresses, error) {
 	}
 	return ipadress, nil
 }
-func FindZonebyid(id string) (Ip_addresses, error) {
+func FindZoneby(id string) (Ip_addresses, error) {
 	var ipadress Ip_addresses
 	err := db1.Db1.Where("id=?", id).Find(&ipadress).Error
 	if err != nil {

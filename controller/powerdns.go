@@ -43,17 +43,17 @@ func CZone(c *fiber.Ctx) error {
 }
 func ChangePtr(c *fiber.Ctx) error {
 
-	ipid := c.Params("id")
+	ipid := c.Params("ip")
 	head := c.GetReqHeaders()
 	token := head["X-Apikey"]
-	ipadress, err := model.FindZonebyid(ipid)
+	ipadress, err := model.FindByip(ipid)
 	isused, err := model.FindAPIKey(token)
 	usedemail, err := model.FindUserById(isused.UserID)
 
 	if err != nil {
 		return fiber.NewError(fiber.StatusUnauthorized, ipadress.Customer)
 	}
-	if ipadress.ID == ipid {
+	if ipadress.Ip == ipid {
 		if ipadress.Customer == usedemail.Email || usedemail.IsAdmin == true {
 			var input model.RecordIn
 			if ipadress.Type == "IPv4" {
