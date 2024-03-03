@@ -14,3 +14,13 @@ func AddPtr(ip string, rdns any) (*strukt.Outputipv4rdns, error) {
 
 	return &output, nil
 }
+func AddPtr6(ip string, rdns any) (*strukt.Outputipv4rdns, error) {
+	var output strukt.Outputipv4rdns
+	err := client.postWithParams("/rdns6/by-ip", map[string]any{"ip": ip, "rdns": rdns},
+		&output)
+	if err != nil {
+		return nil, err
+	}
+
+	return &output, nil
+}
