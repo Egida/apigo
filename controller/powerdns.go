@@ -85,9 +85,7 @@ func ChangePtr(c *fiber.Ctx) error {
 				if err := model.Validate.Struct(&input); err != nil {
 					return err
 				}
-				pwdns := powerdns.NewClient(viper.GetString("app.powerdnsserver"), "localhost", map[string]string{"X-API-Key": viper.GetString("app.powerdnskey")}, nil)
-				ctx := context.Background()
-				err := pwdns.Records.Change(ctx, ipadress.Zone, ipadress.Zonename+"."+ipadress.Zone, powerdns.RRTypePTR, 60, []string{input.Data + "."})
+				_, err := synlinq.AddPtr6(ipadress.Ip, input.Data)
 				if err != nil {
 					return fiber.NewError(fiber.StatusBadRequest, err.Error())
 				}
