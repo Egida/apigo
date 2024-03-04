@@ -4,13 +4,11 @@ import (
 	"api/model"
 	"api/pdns"
 	"api/synlinq"
-	
+
 	"net"
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
-	
-
 )
 
 func CZone(c *fiber.Ctx) error {
@@ -98,12 +96,12 @@ func ChangePtr(c *fiber.Ctx) error {
 
 		} else {
 
-			return fiber.NewError(fiber.StatusBadRequest, "")
+			return fiber.NewError(fiber.StatusBadRequest, "IP Address not in your Service")
 		}
 
 	} else {
 
-		return fiber.NewError(fiber.StatusBadRequest, "Zone not found")
+		return fiber.NewError(fiber.StatusBadRequest, "IP not found")
 	}
 	return nil
 }
