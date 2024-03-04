@@ -4,7 +4,7 @@ import (
 	"api/model"
 	"api/pdns"
 	"api/synlinq"
-	"context"
+	
 	"net"
 	"net/http"
 
