@@ -9,8 +9,8 @@ import (
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/joeig/go-powerdns/v3"
-	"github.com/spf13/viper"
+	
+
 )
 
 func CZone(c *fiber.Ctx) error {
