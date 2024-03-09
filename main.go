@@ -14,12 +14,14 @@ import (
 	"api/pdns"
 	"api/synlinq"
 	"api/vpn"
+	"crypto/tls"
 	"fmt"
 	"os"
 	"strings"
 	"time"
 
 	jsoniter "github.com/json-iterator/go"
+	"golang.org/x/crypto/acme/autocert"
 
 	//"log"
 
@@ -254,9 +256,35 @@ func serveApplication() {
 	health.Use(middleware.APIKeyAuthMiddleware)
 	health.Get("/health", controller.Health)
 
+	// Certificate manager
+	m := &autocert.Manager{
+		Prompt: autocert.AcceptTOS,
+		// Replace with your domain
+		HostPolicy: autocert.HostWhitelist("api.dnic.cloud"),
+		// Folder to store the certificates
+		Cache: autocert.DirCache("./certs"),
+	}
+
+	// TLS Config
+	cfg := &tls.Config{
+		// Get Certificate from Let's Encrypt
+		GetCertificate: m.GetCertificate,
+		// By default NextProtos contains the "h2"
+		// This has to be removed since Fasthttp does not support HTTP/2
+		// Or it will cause a flood of PRI method logs
+		// http://webconcepts.info/concepts/http-method/PRI
+		NextProtos: []string{
+			"http/1.1", "acme-tls/1",
+		},
+	}
+	ln, err := tls.Listen("tcp", ":443", cfg)
+	if err != nil {
+		panic(err)
+	}
 	//ping := app.Group("/ping")
 	//ping.Use(middleware.JWTAuthMiddleware)
 	//ping.Get("/host/:host/:port", controller.Ping)
 	//app.Listen(":8000")
-	app.ListenTLS(":443", "./fullchain.crt", "./fullchain.key")
+	//app.ListenTLS(":443", "./fullchain.crt", "./fullchain.key")
+	app.Listener(ln)
 }
